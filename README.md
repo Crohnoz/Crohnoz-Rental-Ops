@@ -1,22 +1,27 @@
 # Sistema Administrativo de Arriendos
 
-Aplicación React/Vite para administrar edificios pequeños: departamentos, arrendatarios, cobros, abonos, vouchers, contratos, boletas y liquidaciones de salida.
+**Selected Engineering Case · Operational Administration System**
 
-## Funcionalidades
+Aplicación React/Vite diseñada para digitalizar la administración cotidiana de edificios pequeños: departamentos, arrendatarios, cobros, abonos, vouchers, contratos, boletas y liquidaciones de salida.
 
-- Dashboard con deuda, pagos, ocupación y ajustes por redondeo.
-- CRUD completo para departamentos, arrendatarios, cobros, vouchers, boletas, contratos y salidas.
-- Vouchers con folio correlativo e impresión térmica.
-- Redondeo de cobros al múltiplo de $100 más cercano.
-- Registro automático de la diferencia para aplicarla en el cobro siguiente.
-- Liquidación de salida con garantía, deuda, retención por luz pendiente y descuentos.
-- Asistente administrativo basado en reglas y alertas.
-- Respaldo y restauración mediante archivo JSON.
-- Interfaz de alta legibilidad pensada para administración diaria.
+Este repositorio funciona como **caso público sanitizado**. La demo utiliza información ficticia y la operación privada permanece separada mediante autenticación, base de datos y políticas de acceso.
 
-## Dos entornos aislados
+## Problema operacional
 
-El mismo código se despliega en dos sitios independientes:
+La administración de arriendos pequeños suele terminar repartida entre planillas, documentos, comprobantes y cálculos manuales. El objetivo del sistema es convertir esas tareas en un flujo explícito, trazable y suficientemente simple para el trabajo diario.
+
+## Qué demuestra
+
+- modelado de departamentos, arrendatarios, cobros y pagos;
+- emisión de vouchers con folio correlativo e impresión térmica;
+- contratos, boletas y liquidaciones de salida;
+- reglas de redondeo con compensación trazable en el cobro siguiente;
+- alertas administrativas basadas en reglas;
+- respaldo y restauración mediante JSON;
+- separación estricta entre demostración pública y operación privada;
+- autenticación y aislamiento de datos con Supabase Auth + RLS.
+
+## Arquitectura de publicación
 
 ### Demo pública
 
@@ -24,13 +29,12 @@ El mismo código se despliega en dos sitios independientes:
 VITE_APP_MODE=demo
 ```
 
-- Poblada con 23 departamentos y datos completamente ficticios.
-- Permite interactuar con todos los módulos.
-- Los cambios quedan únicamente en el navegador del visitante.
-- Incluye restauración inmediata de los datos originales de demostración.
-- No tiene conexión con la base de datos privada.
+- Datos completamente ficticios para 23 departamentos.
+- Todos los cambios permanecen en el navegador del visitante.
+- Restauración inmediata del estado original de demostración.
+- Sin conexión a la base de datos privada.
 
-### Producción privada
+### Operación privada
 
 ```env
 VITE_APP_MODE=private
@@ -40,17 +44,27 @@ VITE_SUPABASE_ANON_KEY=CLAVE_ANON_PUBLICA
 
 - Inicio de sesión obligatorio con Supabase Auth.
 - Espacio de trabajo centralizado y sincronizado.
-- Row Level Security para impedir acceso entre propietarios.
-- La copia temporal del navegador usa `sessionStorage` y se elimina al cerrar la sesión o pestaña.
-- Los datos reales nunca forman parte del repositorio ni de la demo.
+- Row Level Security para aislar los datos por propietario.
+- Copia temporal de trabajo en `sessionStorage`.
+- Los datos reales nunca forman parte del repositorio ni de la demo pública.
 
-La configuración completa está documentada en [`docs/ENTORNOS_Y_SEGURIDAD.md`](docs/ENTORNOS_Y_SEGURIDAD.md).
+La configuración está documentada en [`docs/ENTORNOS_Y_SEGURIDAD.md`](docs/ENTORNOS_Y_SEGURIDAD.md).
 
-## Regla de redondeo
+## Regla contable de redondeo
 
-El total calculado se redondea al múltiplo de $100 más cercano. La diferencia se registra con signo contrario como `ajusteSiguiente`, para compensarla en el próximo cobro y mantener trazabilidad contable.
+El total calculado se redondea al múltiplo de $100 más cercano. La diferencia se registra con signo contrario como `ajusteSiguiente`, permitiendo compensarla en el próximo cobro sin perder trazabilidad.
 
-## Desarrollo
+## Stack
+
+- React
+- Vite
+- JavaScript
+- Supabase Auth
+- PostgreSQL / Supabase
+- Row Level Security
+- Netlify
+
+## Desarrollo local
 
 ```bash
 cp .env.example .env
@@ -58,14 +72,23 @@ npm install
 npm run dev
 ```
 
-## Producción
+Build:
 
 ```bash
 npm run build
 ```
 
-El repositorio incluye `netlify.toml` con publicación desde `dist` y redirección SPA.
+## Límites actuales
 
-## Base de datos privada
+La implementación privada actual utiliza un propietario por espacio de trabajo. La evolución multiusuario requiere organizaciones, membresías, roles, auditoría por usuario y mayor normalización del dominio.
 
-Ejecutar la migración [`supabase/migrations/001_private_workspaces.sql`](supabase/migrations/001_private_workspaces.sql) en el proyecto Supabase de producción antes de activar el modo privado.
+Este repositorio no pretende exponer datos de clientes ni representar una plataforma SaaS multi-tenant terminada. Su valor público está en mostrar el **problema, las reglas operacionales, la separación de entornos y las decisiones de seguridad**.
+
+## Crohnoz Labs
+
+Parte del portfolio público de ingeniería de Crohnoz Labs.
+
+**Problem → System → Evidence → Scale**
+
+- Perfil y evidencia pública: https://github.com/Crohnoz
+- Crohnoz Labs: https://crohnozlabs.cl
