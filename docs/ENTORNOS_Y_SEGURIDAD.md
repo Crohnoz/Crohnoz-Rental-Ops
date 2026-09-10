@@ -25,13 +25,13 @@ Sitio recomendado:
 - `sistema-administrativo-arriendos.netlify.app`
 - Futuro dominio: `demo.arriendos.crohnozlabs.cl`
 
-## 2. Producción privada de don Cristian
+## 2. Operación privada
 
 Variables de entorno:
 
 ```env
 VITE_APP_MODE=private
-VITE_PRODUCT_NAME=Administración Edificio 23
+VITE_PRODUCT_NAME=Administración de Arriendos
 VITE_SUPABASE_URL=https://PROYECTO.supabase.co
 VITE_SUPABASE_ANON_KEY=CLAVE_ANON_PUBLICA
 ```
@@ -49,15 +49,15 @@ Características:
 Sitio recomendado:
 
 - Nombre Netlify distinto al de la demo.
-- Futuro dominio: `cristian.arriendos.crohnozlabs.cl` o `app.arriendos.crohnozlabs.cl`.
+- Futuro dominio: `app.arriendos.crohnozlabs.cl`.
 
 ## Configuración de Supabase
 
 1. Crear un proyecto exclusivo para producción.
 2. Ejecutar `supabase/migrations/001_private_workspaces.sql` en SQL Editor.
-3. En Authentication, crear o invitar al usuario de don Cristian.
-4. Exigir una contraseña de al menos 12 caracteres para la cuenta real.
-5. Desactivar registros públicos si solo se crearán usuarios administrativamente.
+3. En Authentication, crear o invitar únicamente a los usuarios autorizados.
+4. Exigir contraseñas robustas para las cuentas reales.
+5. Desactivar registros públicos si los usuarios se crearán administrativamente.
 6. Configurar las variables privadas en el sitio Netlify de producción.
 7. No copiar datos reales al despliegue demo.
 
@@ -70,13 +70,13 @@ Ambos sitios pueden apuntar al mismo repositorio y a la misma rama estable:
 | Sitio | Variable `VITE_APP_MODE` | Base de datos |
 |---|---|---|
 | Demo pública | `demo` | Ninguna; datos ficticios locales |
-| Producción privada | `private` | Proyecto Supabase de producción |
+| Operación privada | `private` | Proyecto Supabase de producción |
 
 La demo y producción deben tener nombres, dominios y variables de entorno diferentes. No utilizar deploy previews con variables privadas compartidas.
 
 ## Migración de información real existente
 
-Si don Cristian ya ingresó datos en una versión local anterior:
+Si existe información cargada en una versión local anterior:
 
 1. Abrir la versión anterior en el mismo navegador.
 2. Descargar el respaldo JSON.
@@ -88,7 +88,7 @@ Si don Cristian ya ingresó datos en una versión local anterior:
 
 ## Próxima evolución multiusuario
 
-La primera versión utiliza un propietario por espacio de trabajo. Para vender el producto a administradores con equipos se deberá agregar:
+La primera versión utiliza un propietario por espacio de trabajo. Para evolucionar hacia administradores con equipos se deberá agregar:
 
 - tabla de organizaciones;
 - tabla de membresías y roles;
@@ -96,4 +96,4 @@ La primera versión utiliza un propietario por espacio de trabajo. Para vender e
 - auditoría por usuario;
 - normalización progresiva de departamentos, cobros, vouchers y contratos.
 
-La separación actual permite lanzar el piloto sin bloquear esa evolución.
+La separación actual permite validar la operación sin bloquear esa evolución.
