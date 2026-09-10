@@ -1,12 +1,14 @@
-# Sistema Administrativo de Arriendos
+# Crohnoz Rental Ops
 
-[![CI](https://github.com/Crohnoz/sistema_gestion_de_arriendos/actions/workflows/ci.yml/badge.svg)](https://github.com/Crohnoz/sistema_gestion_de_arriendos/actions/workflows/ci.yml)
+[![CI](https://github.com/Crohnoz/Crohnoz-Rental-Ops/actions/workflows/ci.yml/badge.svg)](https://github.com/Crohnoz/Crohnoz-Rental-Ops/actions/workflows/ci.yml)
 
-**Selected Engineering Case · Operational Administration System**
+**Selected Engineering Case · Rental Operations & Property Administration**
 
-Aplicación React/Vite diseñada para digitalizar la administración cotidiana de edificios pequeños: departamentos, arrendatarios, cobros, abonos, vouchers, contratos, boletas y liquidaciones de salida.
+Crohnoz Rental Ops es la superficie pública y sanitizada de un sistema React/Vite diseñado para digitalizar la administración cotidiana de edificios pequeños: departamentos, arrendatarios, cobros, abonos, vouchers, contratos, boletas y liquidaciones de salida.
 
-Este repositorio funciona como **caso público sanitizado**. La demo utiliza información ficticia y la operación privada permanece separada mediante autenticación, base de datos y políticas de acceso.
+El repositorio muestra **reglas operacionales, separación de entornos y decisiones de seguridad** sin exponer datos reales de arrendatarios, credenciales ni detalles privados de despliegue.
+
+> La identidad privada de producto puede variar por despliegue. Actualmente, una de las superficies privadas utiliza la marca **Arrendía**; el repositorio público mantiene el nombre técnico Crohnoz Rental Ops.
 
 ## Problema operacional
 
@@ -56,6 +58,20 @@ La configuración está documentada en [`docs/ENTORNOS_Y_SEGURIDAD.md`](docs/ENT
 
 El total calculado se redondea al múltiplo de $100 más cercano. La diferencia se registra con signo contrario como `ajusteSiguiente`, permitiendo compensarla en el próximo cobro sin perder trazabilidad.
 
+## Quality gate
+
+La CI valida tanto la superficie demo como el shell privado:
+
+```text
+validate demo seed
+→ validate environment routing
+→ build demo
+→ build private shell
+→ validate Arrendía theme bundle
+```
+
+Esto mantiene separadas las dos rutas de publicación y evita que un cambio visual o de routing rompa silenciosamente uno de los contextos.
+
 ## Stack
 
 - React
@@ -84,7 +100,7 @@ npm run build
 
 La implementación privada actual utiliza un propietario por espacio de trabajo. La evolución multiusuario requiere organizaciones, membresías, roles, auditoría por usuario y mayor normalización del dominio.
 
-Este repositorio no pretende exponer datos de clientes ni representar una plataforma SaaS multi-tenant terminada. Su valor público está en mostrar el **problema, las reglas operacionales, la separación de entornos y las decisiones de seguridad**.
+Este repositorio no pretende representar una plataforma SaaS multi-tenant terminada. Su valor público está en demostrar el **problema, las reglas operacionales, la separación de entornos y las decisiones de seguridad**.
 
 ## Crohnoz Labs
 
@@ -93,4 +109,5 @@ Parte del portfolio público de ingeniería de Crohnoz Labs.
 **Problem → System → Evidence → Scale**
 
 - Perfil y evidencia pública: https://github.com/Crohnoz
+- Engineering case study: https://github.com/Crohnoz/Crohnoz/blob/main/evidence/rental-operations.md
 - Crohnoz Labs: https://crohnozlabs.cl
