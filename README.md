@@ -1,44 +1,63 @@
+<div align="center">
+
+<img src="https://raw.githubusercontent.com/Crohnoz/Crohnoz/main/brand/assets/logo-horizontal-dark.svg" alt="Crohnoz Labs" width="340" />
+
 # Crohnoz Rental Ops
+
+### Selected Engineering Case · Rental Operations & Property Administration
+
+**Operational rules, financial traceability and public/private separation for small-building administration.**
 
 [![CI](https://github.com/Crohnoz/Crohnoz-Rental-Ops/actions/workflows/ci.yml/badge.svg)](https://github.com/Crohnoz/Crohnoz-Rental-Ops/actions/workflows/ci.yml)
 
-**Selected Engineering Case · Rental Operations & Property Administration**
+<a href="https://github.com/Crohnoz/Crohnoz/blob/main/evidence/rental-operations.md"><img src="https://img.shields.io/badge/OPEN-ENGINEERING_CASE-A855F7?style=for-the-badge" height="34" alt="Open engineering case" /></a>
+<a href="https://github.com/Crohnoz"><img src="https://img.shields.io/badge/RETURN-PROFESSIONAL_PROFILE-8B5CF6?style=for-the-badge" height="34" alt="Professional profile" /></a>
 
-Crohnoz Rental Ops es la superficie pública y sanitizada de un sistema React/Vite diseñado para digitalizar la administración cotidiana de edificios pequeños: departamentos, arrendatarios, cobros, abonos, vouchers, contratos, boletas y liquidaciones de salida.
+**Problem → System → Evidence → Scale**
 
-El repositorio muestra **reglas operacionales, separación de entornos y decisiones de seguridad** sin exponer datos reales de arrendatarios, credenciales ni detalles privados de despliegue.
+</div>
 
-> La identidad privada de producto puede variar por despliegue. Actualmente, una de las superficies privadas utiliza la marca **Arrendía**; el repositorio público mantiene el nombre técnico Crohnoz Rental Ops.
+---
 
-## Problema operacional
+## Why this system exists
 
-La administración de arriendos pequeños suele terminar repartida entre planillas, documentos, comprobantes y cálculos manuales. El objetivo del sistema es convertir esas tareas en un flujo explícito, trazable y suficientemente simple para el trabajo diario.
+Small rental operations often end up split across spreadsheets, documents, receipts, chat messages and manual calculations. Crohnoz Rental Ops explores how those tasks can be turned into **explicit, traceable operational state** without forcing a heavyweight property-management stack onto a small operator.
 
-## Qué demuestra
+The repository is a **sanitized public engineering surface**. Real tenant data, credentials and private deployment details are intentionally excluded.
 
-- modelado de departamentos, arrendatarios, cobros y pagos;
-- emisión de vouchers con folio correlativo e impresión térmica;
-- contratos, boletas y liquidaciones de salida;
-- reglas de redondeo con compensación trazable en el cobro siguiente;
-- alertas administrativas basadas en reglas;
-- respaldo y restauración mediante JSON;
-- separación estricta entre demostración pública y operación privada;
-- autenticación y aislamiento de datos con Supabase Auth + RLS.
+> One private deployment currently uses the product identity **Arrendía**. This repository keeps the neutral engineering name Crohnoz Rental Ops.
 
-## Arquitectura de publicación
+---
 
-### Demo pública
+## What it proves at a glance
+
+| Capability | Implemented signal |
+|---|---|
+| **Domain modeling** | Apartments, tenants, charges, payments, contracts and exit settlements are explicit entities/workflows |
+| **Financial traceability** | Rounding differences are carried forward through a recorded compensation rule |
+| **Document workflow** | Vouchers, receipts, contracts and settlement outputs are part of the operation |
+| **Environment separation** | Public demo mode and authenticated private mode follow different data boundaries |
+| **Authorization** | Private operation uses Supabase Auth + Row Level Security |
+| **Continuity** | Backup / restore and browser-local working state are part of the operating model |
+
+This is presented as **selected operational evidence**, not as a finished multi-tenant SaaS platform.
+
+---
+
+## Publication architecture
+
+### Public demonstration boundary
 
 ```env
 VITE_APP_MODE=demo
 ```
 
-- Datos completamente ficticios para 23 departamentos.
-- Todos los cambios permanecen en el navegador del visitante.
-- Restauración inmediata del estado original de demostración.
-- Sin conexión a la base de datos privada.
+- fictitious dataset for 23 apartments;
+- mutations stay in the visitor's browser;
+- demo state can be restored immediately;
+- no connection to the private database.
 
-### Operación privada
+### Private operational boundary
 
 ```env
 VITE_APP_MODE=private
@@ -46,21 +65,28 @@ VITE_SUPABASE_URL=https://PROYECTO.supabase.co
 VITE_SUPABASE_ANON_KEY=CLAVE_ANON_PUBLICA
 ```
 
-- Inicio de sesión obligatorio con Supabase Auth.
-- Espacio de trabajo centralizado y sincronizado.
-- Row Level Security para aislar los datos por propietario.
-- Copia temporal de trabajo en `sessionStorage`.
-- Los datos reales nunca forman parte del repositorio ni de la demo pública.
+- authenticated access with Supabase Auth;
+- synchronized workspace;
+- PostgreSQL / Supabase-backed state;
+- Row Level Security isolates data by owner;
+- temporary browser working copy in `sessionStorage`;
+- real operational data is never committed to this repository or embedded in the public demo.
 
-La configuración está documentada en [`docs/ENTORNOS_Y_SEGURIDAD.md`](docs/ENTORNOS_Y_SEGURIDAD.md).
+Detailed environment and security behavior is documented in [`docs/ENTORNOS_Y_SEGURIDAD.md`](docs/ENTORNOS_Y_SEGURIDAD.md).
 
-## Regla contable de redondeo
+---
 
-El total calculado se redondea al múltiplo de $100 más cercano. La diferencia se registra con signo contrario como `ajusteSiguiente`, permitiendo compensarla en el próximo cobro sin perder trazabilidad.
+## A concrete domain rule: rounding compensation
+
+The calculated amount is rounded to the nearest `$100`. The difference is persisted with the opposite sign as `ajusteSiguiente`, so it can be compensated in the following charge without silently losing accounting traceability.
+
+That rule is representative of the engineering approach used here: **business behavior is modeled explicitly instead of being hidden inside presentation code**.
+
+---
 
 ## Quality gate
 
-La CI valida tanto la superficie demo como el shell privado:
+CI validates both publication modes rather than assuming that one successful build proves both contexts:
 
 ```text
 validate demo seed
@@ -70,19 +96,18 @@ validate demo seed
 → validate Arrendía theme bundle
 ```
 
-Esto mantiene separadas las dos rutas de publicación y evita que un cambio visual o de routing rompa silenciosamente uno de los contextos.
+This guards the separation between public demonstration and private operation and catches visual/routing changes that could silently break one mode.
 
-## Stack
+---
 
-- React
-- Vite
-- JavaScript
-- Supabase Auth
-- PostgreSQL / Supabase
-- Row Level Security
-- Netlify
+## Current engineering surface
 
-## Desarrollo local
+`React` · `Vite` · `JavaScript` · `Supabase Auth` · `PostgreSQL / Supabase` · `RLS` · `Netlify`
+
+<details>
+<summary><strong>Local development</strong></summary>
+
+<br/>
 
 ```bash
 cp .env.example .env
@@ -90,24 +115,31 @@ npm install
 npm run dev
 ```
 
-Build:
+Production build:
 
 ```bash
 npm run build
 ```
 
-## Límites actuales
+</details>
 
-La implementación privada actual utiliza un propietario por espacio de trabajo. La evolución multiusuario requiere organizaciones, membresías, roles, auditoría por usuario y mayor normalización del dominio.
+---
 
-Este repositorio no pretende representar una plataforma SaaS multi-tenant terminada. Su valor público está en demostrar el **problema, las reglas operacionales, la separación de entornos y las decisiones de seguridad**.
+## Current boundaries
 
-## Crohnoz Labs
+The current private implementation uses one owner per workspace. Moving toward a broader multi-user product would require explicit organizations, memberships, roles, user-level auditability and additional domain normalization.
 
-Parte del portfolio público de ingeniería de Crohnoz Labs.
+The public repository therefore does **not** claim multi-tenant SaaS maturity. Its value is the inspectable engineering around operational rules, finance, environment isolation, authorization and continuity.
 
-**Problem → System → Evidence → Scale**
+---
 
-- Perfil y evidencia pública: https://github.com/Crohnoz
-- Engineering case study: https://github.com/Crohnoz/Crohnoz/blob/main/evidence/rental-operations.md
-- Crohnoz Labs: https://crohnozlabs.cl
+<div align="center">
+
+### Crohnoz Labs
+
+**Evidence is public by design. Product implementation is private by default.**
+
+<a href="https://github.com/Crohnoz/Crohnoz/blob/main/evidence/rental-operations.md"><img src="https://img.shields.io/badge/REVIEW-CURATED_CASE-A855F7?style=for-the-badge" height="34" alt="Review curated case" /></a>
+<a href="https://crohnozlabs.cl"><img src="https://img.shields.io/badge/ENTER-CROHNOZ_LABS-EC4899?style=for-the-badge" height="34" alt="Crohnoz Labs" /></a>
+
+</div>
