@@ -1,5 +1,7 @@
 # Sistema Administrativo de Arriendos
 
+[![CI](https://github.com/Crohnoz/sistema_gestion_de_arriendos/actions/workflows/ci.yml/badge.svg)](https://github.com/Crohnoz/sistema_gestion_de_arriendos/actions/workflows/ci.yml)
+
 **Selected Engineering Case · Operational Administration System**
 
 Aplicación React/Vite diseñada para digitalizar la administración cotidiana de edificios pequeños: departamentos, arrendatarios, cobros, abonos, vouchers, contratos, boletas y liquidaciones de salida.
