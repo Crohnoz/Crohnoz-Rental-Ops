@@ -11,7 +11,8 @@
 [![CI](https://github.com/Crohnoz/Crohnoz-Rental-Ops/actions/workflows/ci.yml/badge.svg)](https://github.com/Crohnoz/Crohnoz-Rental-Ops/actions/workflows/ci.yml)
 
 <a href="https://github.com/Crohnoz/Crohnoz/blob/main/evidence/rental-operations.md"><img src="https://img.shields.io/badge/OPEN-ENGINEERING_CASE-A855F7?style=for-the-badge" height="34" alt="Open engineering case" /></a>
-<a href="https://github.com/Crohnoz"><img src="https://img.shields.io/badge/RETURN-PROFESSIONAL_PROFILE-8B5CF6?style=for-the-badge" height="34" alt="Professional profile" /></a>
+<a href="https://crohnozlabs.cl"><img src="https://img.shields.io/badge/CROHNOZ-LABS-06B6D4?style=for-the-badge" height="34" alt="Crohnoz Labs" /></a>
+<a href="https://github.com/Crohnoz"><img src="https://img.shields.io/badge/PROFILE-ENRIQUE_FLORES-8B5CF6?style=for-the-badge" height="34" alt="Enrique Flores profile" /></a>
 
 **Problem → System → Evidence → Scale**
 
