@@ -2,9 +2,9 @@ name: Supabase database health check
 
 on:
   schedule:
-    # GitHub cron uses UTC. Three read-only checks per day provide regular,
-    # legitimate application traffic without modifying business records.
-    - cron: "17 3,11,19 * * *"
+    # GitHub cron uses UTC. One daily read-only health check limits runner usage.
+    # Monitor failures and validate Supabase credentials before production use.
+    - cron: "17 11 * * *"
   workflow_dispatch:
 
 permissions:
